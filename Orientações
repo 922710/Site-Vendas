@@ -1,0 +1,65 @@
+Aqui estão as orientações principais:
+
+---
+
+## 🚀 Do zero ao ar — passo a passo
+
+### Primeira vez (configuração)
+```bash
+git init
+git add .
+git commit -m "primeiro commit"
+git branch -M main
+git remote add origin https://github.com/SEU-USUARIO/SEU-REPO.git
+git push -u origin main
+```
+
+### Atualizar o site depois
+```bash
+git add .
+git commit -m "descrição do que mudou"
+git push
+```
+
+---
+
+## 🔑 Login no GitHub pelo terminal
+A senha não é a da conta — é um **token**.
+
+Para gerar: GitHub → foto do perfil → **Settings → Developer settings → Personal access tokens → Tokens (classic) → Generate new token** → marca **repo** → copia e usa como senha.
+
+---
+
+## ⚠️ Erros comuns
+
+| Erro | Solução |
+|---|---|
+| `remote origin already exists` | `git remote remove origin` e adiciona de novo |
+| `Repository not found` | Confere se a URL do repositório está certa |
+| `push` pede login | Usa token no lugar da senha |
+
+---
+
+## 🌐 Subir no Vercel
+1. [vercel.com](https://vercel.com) → login com GitHub
+2. **Add New Project** → importa o repositório
+3. Clica em **Deploy** — detecta o Vite sozinho
+4. Site no ar em ~30 segundos
+
+---
+
+## 💻 Rodar local no VSCode
+```bash
+npm install   # só na primeira vez
+npm run dev   # abre em http://localhost:5173
+```
+Para parar: `Ctrl + C`
+
+---
+
+## 📁 Onde editar conteúdo
+| O que mudar | Arquivo |
+|---|---|
+| Projetos, serviços, FAQ | `src/data.js` |
+| Cores | `src/tokens.js` |
+| Número do WhatsApp | busca `5561992271063` nos arquivos |
