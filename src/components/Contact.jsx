@@ -8,9 +8,13 @@ const CONTACT_LINKS = [
   { icon: "📧", label: "E-mail", val: "marianaviana121@gmail.com", url: "mailto:marianaviana121@gmail.com" },
 ]
 
+const FORMSPREE_URL = "https://formspree.io/f/xgojvjve"
+
 export default function Contact() {
   const [form, setForm] = useState({ nome: "", email: "", tipo: "empresa", msg: "" })
   const [sent, setSent] = useState(false)
+  const [sending, setSending] = useState(false)
+  const [error, setError] = useState(null)
   const [foc, setFoc] = useState(null)
   const [ref, vis] = useVisible()
 
@@ -19,6 +23,35 @@ export default function Contact() {
     border: `1px solid ${foc === f ? T.accent : T.border}`, color: T.fg,
     outline: "none", borderRadius: 8, transition: "border-color .2s",
   })
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setSending(true)
+    setError(null)
+
+    try {
+      const res = await fetch(FORMSPREE_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify({
+          nome: form.nome,
+          email: form.email,
+          tipo: form.tipo,
+          mensagem: form.msg,
+        }),
+      })
+
+      if (res.ok) {
+        setSent(true)
+      } else {
+        setError("Algo deu errado. Tente me chamar no WhatsApp.")
+      }
+    } catch {
+      setError("Sem conexão. Tente me chamar no WhatsApp.")
+    } finally {
+      setSending(false)
+    }
+  }
 
   return (
     <section id="contato" ref={ref} style={{ padding: "96px 0", background: T.bg2 }}>
@@ -83,7 +116,7 @@ export default function Contact() {
             </div>
           ) : (
             <form
-              onSubmit={e => { e.preventDefault(); setSent(true) }}
+              onSubmit={handleSubmit}
               style={{ display: "flex", flexDirection: "column", gap: 20, padding: "36px 32px", background: T.bg3, border: `1px solid ${T.border}`, borderRadius: 16 }}
             >
               <h3 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 600, fontSize: 18, color: T.fg, marginBottom: 4 }}>
@@ -154,13 +187,18 @@ export default function Contact() {
                 />
               </div>
 
+              {error && (
+                <p style={{ fontSize: 13, color: "#f87171", textAlign: "center" }}>{error}</p>
+              )}
+
               <button
                 type="submit"
-                style={{ padding: "13px", background: T.accent, color: "#fff", fontSize: 14, fontWeight: 500, borderRadius: 8, transition: "opacity .2s" }}
-                onMouseEnter={e => (e.currentTarget.style.opacity = ".85")}
-                onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
+                disabled={sending}
+                style={{ padding: "13px", background: T.accent, color: "#fff", fontSize: 14, fontWeight: 500, borderRadius: 8, transition: "opacity .2s", opacity: sending ? 0.6 : 1, cursor: sending ? "not-allowed" : "pointer" }}
+                onMouseEnter={e => { if (!sending) e.currentTarget.style.opacity = ".85" }}
+                onMouseLeave={e => { if (!sending) e.currentTarget.style.opacity = "1" }}
               >
-                Enviar mensagem →
+                {sending ? "Enviando..." : "Enviar mensagem →"}
               </button>
             </form>
           )}
