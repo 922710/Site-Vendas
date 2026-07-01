@@ -1,4 +1,4 @@
-  import React, { useState } from 'react';
+   import React, { useState } from 'react';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -18,15 +18,11 @@ export default function Contact() {
   const handleSubmit = (e) => {
     e.preventDefault();
     
-    // Configuração do link do WhatsApp Business com mensagem personalizada
     const numeroWhatsapp = "5561995895972";
     const textoMensagem = `Olá! Meu nome é ${encodeURIComponent(formData.name)} (${encodeURIComponent(formData.email)}).%0A%0A${encodeURIComponent(formData.message)}`;
     const urlWhatsapp = `https://wa.me/${numeroWhatsapp}?text=${textoMensagem}`;
     
-    // Redireciona o usuário para o WhatsApp
     window.open(urlWhatsapp, '_blank');
-    
-    // Limpa o formulário
     setFormData({ name: '', email: '', message: '' });
   };
 
@@ -87,8 +83,7 @@ export default function Contact() {
             borderRadius: '4px',
             cursor: 'pointer',
             fontSize: '16px',
-            fontWeight: 'bold',
-            transition: 'background 0.2s'
+            fontWeight: 'bold'
           }}
         >
           Iniciar Conversa no WhatsApp
