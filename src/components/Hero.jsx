@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react"
 import { T } from "../tokens.js"
 
-const WA_URL = "https://wa.me/5561992271063?text=Olá%20Mariana!%20Quero%20criar%20meu%20site!"
+const WA_URL = "https://wa.me/5561995895972?text=Olá%20Mariana!%20Quero%20criar%20meu%20site!"
 
 const STATS = [
   ["7+", "sites entregues"],
